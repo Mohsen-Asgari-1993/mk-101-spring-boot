@@ -1,12 +1,14 @@
 package ir.maktabsharif101.springboot.firstspringboot.domain;
 
-import jakarta.persistence.*;
+import ir.maktabsharif101.base.datajpa.domain.BaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.io.Serializable;
 
 @Entity
 @Table(
@@ -22,17 +24,13 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Address implements Serializable {
+public class Address extends BaseEntity<Long> {
 
     public static final String TABLE_NAME = "address";
 
     public static final String ADDRESS = "address";
     public static final String POSTAL_CODE = "postal_code";
     public static final String CUSTOMER_ID = "customer_id";
-
-    @Id
-    @GeneratedValue
-    private Long id;
 
     @Column(name = ADDRESS)
     private String address;
