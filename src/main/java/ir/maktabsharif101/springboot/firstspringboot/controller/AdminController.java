@@ -1,12 +1,12 @@
 package ir.maktabsharif101.springboot.firstspringboot.controller;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
+@Repository
 @RequestMapping("/admin")
 public class AdminController {
 
