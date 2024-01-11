@@ -1,7 +1,5 @@
 package ir.maktabsharif101.springboot.firstspringboot.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,13 +11,9 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonInfoDTO implements Serializable {
+public class ErrorDTO implements Serializable {
 
-    @NotNull
-    private Integer id;
+    private String message;
 
-    private String firstName;
-
-    @NotBlank
-    private String lastName;
+    private String date;
 }

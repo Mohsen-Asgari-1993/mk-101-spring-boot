@@ -1,8 +1,14 @@
 package ir.maktabsharif101.springboot.firstspringboot.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import ir.maktabsharif101.springboot.firstspringboot.dto.ErrorDTO;
 import ir.maktabsharif101.springboot.firstspringboot.dto.PersonInfoDTO;
 import jakarta.validation.Valid;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +43,22 @@ public class PersonResource {
     }
 
     @PostMapping("/by-request-body")
+    @Operation(
+            summary = "this is api summary",
+            description = "this is api description",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "every thing is ok"),
+                    @ApiResponse(
+                            responseCode = "400", description = "required fields missed",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ErrorDTO.class)
+                                    )
+                            }
+                    )
+            }
+    )
     public ResponseEntity<PersonInfoDTO> postByRequestBody(@RequestBody @Valid PersonInfoDTO dto) {
         return ResponseEntity.ok(dto);
     }
