@@ -6,8 +6,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import ir.maktabsharif101.springboot.firstspringboot.dto.ErrorDTO;
 import ir.maktabsharif101.springboot.firstspringboot.dto.PersonInfoDTO;
+import ir.maktabsharif101.springboot.firstspringboot.exception.GeneralRuntimeException;
+import ir.maktabsharif101.springboot.firstspringboot.exception.MvcRuntimeException;
 import jakarta.validation.Valid;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -67,7 +70,14 @@ public class PersonResource {
     public ResponseEntity<List<PersonInfoDTO>> getAllPersonInfo() {
         int numberOfPersons = ThreadLocalRandom.current().nextInt(5, 10);
         if (numberOfPersons == 6) {
-            return ResponseEntity.status(400).build();
+            throw new GeneralRuntimeException(
+                    "numberOfPersons is 6",
+                    HttpStatus.FORBIDDEN
+            );
+        } else if (numberOfPersons == 5) {
+            throw new MvcRuntimeException(
+                    "numberOfPersons is 5"
+            );
         } else {
             List<PersonInfoDTO> personInfoDTOS = new ArrayList<>();
             for (int i = 0; i < numberOfPersons; i++) {
