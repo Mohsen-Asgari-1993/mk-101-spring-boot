@@ -9,6 +9,8 @@ import ir.maktabsharif101.springboot.firstspringboot.repository.CustomerReposito
 import ir.maktabsharif101.springboot.firstspringboot.service.CustomerService;
 import ir.maktabsharif101.springboot.firstspringboot.service.RoleService;
 import ir.maktabsharif101.springboot.firstspringboot.util.HashUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +47,11 @@ public class CustomerServiceImpl extends BaseUserServiceImpl<Customer, CustomerR
         customer.setWorkshopCode(registrationDTO.getWorkshopCode());
         customer.setEconomicCode(registrationDTO.getEconomicCode());
         baseRepository.save(customer);
+    }
+
+    @Override
+    public Page<Customer> findAll(Pageable pageable) {
+        return baseRepository.findAll(pageable);
     }
 
     private void doCommonOperationForRegistration(Customer customer, CustomerRegistrationDTO registrationDTO) {
