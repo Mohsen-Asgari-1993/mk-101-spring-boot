@@ -26,11 +26,13 @@ public class User extends BaseEntity<Long> {
     public static final String FIRST_NAME = "first_name";
     public static final String LAST_NAME = "last_name";
     public static final String USERNAME = "username";
+    public static final String MOBILE_NUMBER = "mobile_number";
     public static final String PASSWORD = "password";
     public static final String EMAIL = "email";
     public static final String NATIONAL_CODE = "national_code";
     public static final String CREATE_DATE = "create_date";
     public static final String LAST_UPDATE_DATE = "last_update_date";
+    public static final String IS_ACTIVE = "is_active";
 
     @Column(name = FIRST_NAME, nullable = false)
     private String firstName;
@@ -40,6 +42,9 @@ public class User extends BaseEntity<Long> {
 
     @Column(name = USERNAME, nullable = false)
     private String username;
+
+    @Column(name = MOBILE_NUMBER)
+    private String mobileNumber;
 
     @Column(name = PASSWORD, nullable = false)
     private String password;
@@ -55,6 +60,9 @@ public class User extends BaseEntity<Long> {
 
     @Column(name = LAST_UPDATE_DATE)
     private ZonedDateTime lastUpdateDate;
+
+    @Column(name = IS_ACTIVE)
+    private Boolean isActive;
 
     @ManyToMany
     @JoinTable(
