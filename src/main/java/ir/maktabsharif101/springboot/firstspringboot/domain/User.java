@@ -56,13 +56,13 @@ public class User extends BaseEntity<Long> {
     private String nationalCode;
 
     @Column(name = CREATE_DATE)
-    private ZonedDateTime createDate;
+    private ZonedDateTime createDate = ZonedDateTime.now();
 
     @Column(name = LAST_UPDATE_DATE)
     private ZonedDateTime lastUpdateDate;
 
     @Column(name = IS_ACTIVE)
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     @ManyToMany
     @JoinTable(

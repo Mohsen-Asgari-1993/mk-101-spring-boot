@@ -6,12 +6,11 @@ import ir.maktabsharif101.springboot.firstspringboot.repository.AdminRepository;
 import ir.maktabsharif101.springboot.firstspringboot.service.AdminService;
 import ir.maktabsharif101.springboot.firstspringboot.service.RoleService;
 import ir.maktabsharif101.springboot.firstspringboot.statics.RoleNames;
+import ir.maktabsharif101.springboot.firstspringboot.util.HashUtil;
 import jakarta.annotation.PostConstruct;
-import org.apache.commons.codec.digest.Sha2Crypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.Set;
@@ -35,9 +34,7 @@ public class AdminServiceImpl extends BaseUserServiceImpl<Admin, AdminRepository
             admin.setLastName("Admin");
             admin.setUsername("systemAdmin");
             admin.setPassword(
-                    Sha2Crypt.sha256Crypt(
-                            "123456789".getBytes(StandardCharsets.UTF_8)
-                    )
+                    HashUtil.hash("12345678")
             );
             admin.setCreateDate(
                     ZonedDateTime.now()
