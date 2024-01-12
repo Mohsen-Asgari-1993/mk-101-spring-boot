@@ -3,6 +3,7 @@ package ir.maktabsharif101.springboot.firstspringboot.service.impl;
 import ir.maktabsharif101.springboot.firstspringboot.domain.Customer;
 import ir.maktabsharif101.springboot.firstspringboot.domain.enumeration.CustomerType;
 import ir.maktabsharif101.springboot.firstspringboot.dto.CustomerRegistrationDTO;
+import ir.maktabsharif101.springboot.firstspringboot.dto.LegalCustomerRegistrationDTO;
 import ir.maktabsharif101.springboot.firstspringboot.exception.GeneralRuntimeException;
 import ir.maktabsharif101.springboot.firstspringboot.repository.CustomerRepository;
 import ir.maktabsharif101.springboot.firstspringboot.service.CustomerService;
@@ -25,13 +26,28 @@ public class CustomerServiceImpl extends BaseUserServiceImpl<Customer, CustomerR
     @Override
     @Transactional
     public void registerRealCustomer(CustomerRegistrationDTO registrationDTO) {
-        if (baseRepository.existsByUsername(registrationDTO.getMobileNumber())) {
-            throw new GeneralRuntimeException(
-                    "duplicate mobileNumber",
-                    HttpStatus.CONFLICT
-            );
-        }
+        checkUsernameForRegistration(registrationDTO);
         Customer customer = new Customer();
+        doCommonOperationForRegistration(customer, registrationDTO);
+        customer.setType(CustomerType.REAL);
+//        TODO add customer role
+        baseRepository.save(customer);
+    }
+
+    @Override
+    @Transactional
+    public void registerLegalCustomer(LegalCustomerRegistrationDTO registrationDTO) {
+        checkUsernameForRegistration(registrationDTO);
+        Customer customer = new Customer();
+        doCommonOperationForRegistration(customer, registrationDTO);
+        customer.setType(CustomerType.LEGAL);
+        customer.setNationalId(registrationDTO.getNationalId());
+        customer.setWorkshopCode(registrationDTO.getWorkshopCode());
+        customer.setEconomicCode(registrationDTO.getEconomicCode());
+        baseRepository.save(customer);
+    }
+
+    private void doCommonOperationForRegistration(Customer customer, CustomerRegistrationDTO registrationDTO) {
         customer.setUsername(registrationDTO.getMobileNumber());
         customer.setMobileNumber(registrationDTO.getMobileNumber());
         customer.setFirstName(registrationDTO.getFirstName());
@@ -41,8 +57,16 @@ public class CustomerServiceImpl extends BaseUserServiceImpl<Customer, CustomerR
         customer.setPassword(
                 HashUtil.hash(registrationDTO.getPassword())
         );
-        customer.setType(CustomerType.REAL);
 //        TODO add customer role
-        baseRepository.save(customer);
+    }
+
+
+    private void checkUsernameForRegistration(CustomerRegistrationDTO registrationDTO) {
+        if (baseRepository.existsByUsername(registrationDTO.getMobileNumber())) {
+            throw new GeneralRuntimeException(
+                    "duplicate mobileNumber",
+                    HttpStatus.CONFLICT
+            );
+        }
     }
 }
