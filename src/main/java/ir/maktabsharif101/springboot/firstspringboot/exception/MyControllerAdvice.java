@@ -1,6 +1,7 @@
 package ir.maktabsharif101.springboot.firstspringboot.exception;
 
 import ir.maktabsharif101.springboot.firstspringboot.dto.ErrorDTO;
+import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,18 @@ public class MyControllerAdvice /*extends ResponseEntityExceptionHandler*/ {
                         ZonedDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
                 ),
                 exception.getStatus()
+        );
+    }
+
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public ResponseEntity<ErrorDTO> handle(ConstraintViolationException exception) {
+        exception.printStackTrace();
+        return new ResponseEntity<>(
+                new ErrorDTO(
+                        exception.getMessage(),
+                        ZonedDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                ),
+                HttpStatus.BAD_REQUEST
         );
     }
 

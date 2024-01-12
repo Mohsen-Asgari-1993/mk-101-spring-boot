@@ -9,17 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerRegistrationDTO implements Serializable {
-
-    @NotBlank
-    @Pattern(regexp = "^09\\d{9}$")
-    private String mobileNumber;
+public class CustomerRegistrationDTO extends MobileNumberDTO {
 
     @NotBlank
     private String firstName;
