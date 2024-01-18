@@ -2,6 +2,7 @@ package ir.maktabsharif101.springboot.firstspringboot.repository;
 
 import ir.maktabsharif101.base.datajpa.repository.BaseEntityRepository;
 import ir.maktabsharif101.springboot.firstspringboot.domain.User;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.Optional;
@@ -11,6 +12,8 @@ public interface BaseUserRepository<T extends User> extends BaseEntityRepository
 
     boolean existsByUsername(String username);
 
+    //        @EntityGraph(value = User.ENTITY_GRAPH)
+    @EntityGraph(attributePaths = {"roles", "roles.permissions"})
     Optional<T> findByUsername(String username);
 
 }

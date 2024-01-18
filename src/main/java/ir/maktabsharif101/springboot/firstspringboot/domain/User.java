@@ -17,9 +17,30 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedEntityGraphs(
+        value = {
+                @NamedEntityGraph(
+                        name = User.ENTITY_GRAPH,
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "roles", subgraph = "roles_subgraph")
+                        },
+                        subgraphs = {
+                                @NamedSubgraph(
+                                        name = "roles_subgraph",
+                                        attributeNodes = {
+                                                @NamedAttributeNode(
+                                                        value = "permissions"
+                                                ),
+                                        }
+                                )
+                        }
+                )
+        }
+)
 public class User extends BaseEntity<Long> {
 
     public static final String TABLE_NAME = "users";
+    public static final String ENTITY_GRAPH = "user_entity_graph";
 
     public static final String ROLES_JOIN_TABLE = "users_roles";
 
